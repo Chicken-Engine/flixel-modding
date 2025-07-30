@@ -174,7 +174,7 @@ class FlxHScript extends FlxBasic
 
             {
                 name: "FlxFrame",
-                classname FlxFrame
+                classname: FlxFrame
             },
 
             // Math
