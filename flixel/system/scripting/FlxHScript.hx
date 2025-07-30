@@ -1,43 +1,22 @@
 package flixel.system.scripting;
 
-import flixel.FlxBasic;
-import flixel.FlxCamera;
-import flixel.FlxG;
-import flixel.FlxGame;
-import flixel.FlxObject;
-import flixel.FlxSprite;
-import flixel.FlxState;
-import flixel.animation.FlxAnimation;
-import flixel.animation.FlxAnimationController;
+import flixel.*;
+import flixel.animation.*;
 import flixel.effects.FlxFlicker;
 import flixel.graphics.FlxGraphic;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.graphics.frames.FlxFrame;
-import flixel.graphics.frames.FlxTileFrames;
-import flixel.group.FlxContainer;
-import flixel.group.FlxGroup;
+import flixel.graphics.frames.*;
+import flixel.group.*;
 import flixel.input.gamepad.FlxGamepad;
 import flixel.input.keyboard.FlxKeyboard;
 import flixel.input.mouse.FlxMouse;
-import flixel.math.FlxAngle;
-import flixel.math.FlxMath;
-import flixel.math.FlxRandom;
-import flixel.math.FlxRect;
+import flixel.math.*;
 import flixel.system.macros.FlxMacroUtil;
-import flixel.text.FlxInputText;
-import flixel.text.FlxText;
-import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
-import flixel.util.FlxColor;
-import flixel.util.FlxSave;
-import flixel.util.FlxSort;
-import flixel.util.FlxTimer;
+import flixel.text.*;
+import flixel.tweens.*;
+import flixel.util.*;
 import haxe.PosInfos;
 
-#if hscript
-import hscript.Interp;
-import hscript.Parser;
-#end
+#if hscript import hscript.*; #end
 
 /**
  * A helper class that simplifies working with HScript inside Flixel.
@@ -114,65 +93,192 @@ class FlxHScript extends FlxBasic
     function loadGlobals():Void
     {
         for (globalKey in globalVariables.keys())
-        {
             setVariable(globalKey, getGlobalVariable(globalKey));
-        }
     }
 
     static function loadFlixelClasses():Void
     {
-        // Basics
-        setGlobalVariable("FlxG", FlxG);
-        setGlobalVariable("FlxGraphic", FlxGraphic);
-        setGlobalVariable("FlxSprite", FlxSprite);
-        setGlobalVariable("FlxObject", FlxObject);
-        setGlobalVariable("FlxBasic", FlxBasic);
-        setGlobalVariable("FlxState", FlxState);
-        setGlobalVariable("FlxCamera", FlxCamera);
-        setGlobalVariable("FlxGame", FlxGame);
+        var vars:Array<{name:String, classname:Dynamic}> =
+        [
 
-        // Groups
-        setGlobalVariable("FlxGroup", FlxGroup);
-        setGlobalVariable("FlxContainer", FlxContainer);
+            // Basics
 
-        // Animation
-        setGlobalVariable("FlxAnimation", FlxAnimation);
-        setGlobalVariable("FlxAnimationController", FlxAnimationController);
-        setGlobalVariable("FlxAtlasFrames", FlxAtlasFrames);
-        setGlobalVariable("FlxTileFrames", FlxTileFrames);
-        setGlobalVariable("FlxFrame", FlxFrame);
+            {
+                name: "FlxG",
+                classname: FlxG
+            },
 
-        // Math
-        setGlobalVariable("FlxAngle", FlxAngle);
-        setGlobalVariable("FlxRect", FlxRect);
-        setGlobalVariable("FlxMath", FlxMath);
-        setGlobalVariable("FlxRandom", FlxRandom);
+            {
+                name: "FlxGraphic",
+                classname: "FlxGraphic"
+            },
 
-        // Text
-        setGlobalVariable("FlxText", FlxText);
-        setGlobalVariable("FlxInputText", FlxInputText);
+            {
+                name: "FlxSprite",
+                classname: FlxSprite
+            },
 
-        // Input
-        setGlobalVariable("FlxMouse", FlxMouse);
-        setGlobalVariable("FlxKeyboard", FlxKeyboard);
-        setGlobalVariable("FlxGamepad", FlxGamepad);
+            {
+                name: "FlxObject",
+                classname: FlxObject
+            },
 
-        // Utilities
-        setGlobalVariable("FlxSave", FlxSave);
-        setGlobalVariable("FlxTimer", FlxTimer);
-        setGlobalVariable("FlxSort", FlxSort);
-        setGlobalVariable("FlxColor", FlxScriptColor);
+            {
+                name: "FlxBasic",
+                classname: FlxBasic
+            },
 
-        #if (!js || !html5)
-        setGlobalVariable("FlxModding", FlxModding);
-        #end
+            {
+                name: "FlxState",
+                classname: FlxState
+            },
 
-        // Tweens
-        setGlobalVariable("FlxTween", FlxTween);
-        setGlobalVariable("FlxEase", FlxEase);
+            {
+                name: "FlxCamera",
+                classname: FlxGame
+            },
 
-        // Effects
-        setGlobalVariable("FlxFlicker", FlxFlicker);    
+            // Groups
+
+            {
+                name: "FlxGroup",
+                classname: FlxGroup
+            },
+
+            {
+                name: "FlxContainer",
+                classname: FlxContainer
+            },
+
+            // Animation
+
+            {
+                name: "FlxAnimation",
+                classname: FlxAnimation
+            },
+
+            {
+                name: "FlxAnimationController",
+                classname: FlxAnimationController
+            },
+
+            {
+                name: "FlxAtlasFrames",
+                classname: FlxAtlasFrames
+            },
+
+            {
+                name: "FlxTileFrames",
+                classname: FlxTileFrames
+            },
+
+            {
+                name: "FlxFrame",
+                classname FlxFrame
+            },
+
+            // Math
+
+            {
+                name: "FlxAngle",
+                classname: FlxAngle
+            },
+
+            {
+                name: "FlxRect",
+                classname: FlxRect
+            },
+
+            {
+                name: "FlxMath",
+                classname: FlxMath
+            },
+
+            {
+                name: "FlxRandom",
+                classname: FlxRandom
+            },
+
+            // Text
+
+            {
+                name: "FlxText",
+                classname: FlxText
+            },
+
+            {
+                name: "FlxInputText",
+                classname: FlxInputText
+            },
+
+            // Input
+
+            {
+                name: "FlxMouse",
+                classname: FlxMouse
+            },
+
+            {
+                name: "FlxKeyboard",
+                classname: FlxKeyboard
+            },
+
+            {
+                name: "FlxGamepad",
+                classname: FlxGamepad
+            },
+
+            // Utilities
+
+            {
+                name: "FlxSave",
+                classname: FlxSave
+            },
+
+            {
+                name: "FlxTimer",
+                classname: FlxTimer
+            },
+
+            {
+                name: "FlxSort",
+                classname: FlxSort
+            },
+
+            {
+                name: "FlxColor",
+                classname: FlxScriptColor
+            },
+
+            #if (!js || !html5)
+            {
+                name: "FlxModding",
+                classname: FlxModding
+            },
+            #end
+
+            // Tweens
+
+            {
+                name: "FlxTween",
+                classname: FlxTween
+            },
+
+            {
+                name: "FlxEase",
+                classname: FlxEase
+            },
+
+            // Effects
+
+            {
+                name: "FlxFlicker",
+                classname: FlxFlicker
+            }
+        ];
+
+        for (i in vars.members)
+            setGlobalVariable(i.name, i.classname);
     }
 
     public static function init():Void
@@ -288,9 +394,7 @@ private class FlxScriptColor
 			var hexColor:String = "0x" + COLOR_REGEX.matched(2);
 			result = new FlxColor(Std.parseInt(hexColor));
 			if (hexColor.length == 8)
-			{
 				result.alphaFloat = 1;
-			}
 		}
 		else
 		{

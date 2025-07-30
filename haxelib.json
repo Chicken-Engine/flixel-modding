@@ -1,12 +1,12 @@
 {
 	"name": "flixel-modding",
-	"url" : "https://github.com/akaFinn/flixel-modding",
+	"url" : "https://github.com/Chicken-Engine/flixel-modding/",
 	"license": "MIT",
 	"tags": ["flixel", "modding"],
 	"description": "A robust modding system for HaxeFlixel.",
 	"version": "1.3.0",
 	"releasenote": "Even more hotfixes, and Polymod support, and HScript support.",
-	"contributors": ["akaFinn"],
+	"contributors": ["akaFinn", "Chicken-Engine"],
 	"dependencies": {
 		"flixel": ""
 	}

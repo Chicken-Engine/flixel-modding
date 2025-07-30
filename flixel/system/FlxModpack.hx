@@ -92,6 +92,7 @@ class FlxModpack extends FlxBasic
             {
                 case FLIXEL:
                     return directory() + "/" + FlxModding.metaDirectory;
+                    
                 case POLYMOD:
                     return directory() + "/" + FlxModding.metaPolymodDirectory;
             }
@@ -106,6 +107,7 @@ class FlxModpack extends FlxBasic
             {
                 case FLIXEL:
                     return directory() + "/" + FlxModding.iconDirectory;
+
                 case POLYMOD:
                     return directory() + "/" + FlxModding.iconPolymodDirectory;
             }
@@ -137,29 +139,27 @@ class FlxModpack extends FlxBasic
         var buf = new StringBuf();
 
         buf.add('{\n'); 
-        buf.add('\t"name": "' + metadata.name + '",\n');
-        buf.add('\t"version": "' + metadata.version + '",\n');
-        buf.add('\t"description": "' + metadata.description + '",\n');
+        buf.add('\t"name": "${metadata.name}",\n');
+        buf.add('\t"version": "${metadata.version}",\n');
+        buf.add('\t"description": "${metadata.description}",\n');
         buf.add('\n\t"credits": [\n');
 
         for (index in 0...metadata.credits.length) 
         {
             var credit = metadata.credits[index];
             buf.add('\t\t{\n');
-            buf.add('\t\t\t"name": "' + credit.name + '",\n');
-            buf.add('\t\t\t"title": "' + credit.title + '",\n');
-            buf.add('\t\t\t"socials": "' + credit.socials + '"\n');
+            buf.add('\t\t\t"name": "${credit.name}",\n');
+            buf.add('\t\t\t"title": "${credit.title}",\n');
+            buf.add('\t\t\t"socials": "${credit.socials}"\n');
             buf.add('\t\t}');
 
             if (index < metadata.credits.length - 1)
-            {
                 buf.add(',\n\n');
-            }
         }
 
         buf.add('\n\t],\n');
-        buf.add('\n\t"priority": ' + metadata.priority + ',\n');
-        buf.add('\t"active": ' + metadata.active + '\n');
+        buf.add('\n\t"priority": ${metadata.priority},\n');
+        buf.add('\t"active": ${metadata.active}\n');
         buf.add('}');
 
         return buf.toString();

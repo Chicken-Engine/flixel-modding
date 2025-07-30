@@ -133,10 +133,10 @@ class FlxModding
 	static var modsDirectory:String = "mods";
 
 	static var metaDirectory:String = "metadata.json";
-	static var iconDirectory:String = "picture.png";
+	static var iconDirectory:String = "icon.png";
 
-	static var metaPolymodDirectory:String = "_polymod_meta.json";
-	static var iconPolymodDirectory:String = "_polymod_icon.png";
+	static var metaPolymodDirectory:String = "metadata.json";
+	static var iconPolymodDirectory:String = "icon.png";
 
     /**
      * Initializes Flixel-Modding to enable support for loading and reloading modded assets at runtime.
@@ -189,15 +189,15 @@ class FlxModding
         }
         else
         {
-            FlxG.log.error("Critical Error! " + FlxModding.modsDirectory + " not found. Please ensure that the directory exists on your filesystem and that it has been properly declared in your 'Project.xml' file. Without this, Flixel-Modding will fail to operate as expected.");
-            FlxG.stage.window.alert(FlxModding.modsDirectory + " not found. Please ensure that the directory exists on your filesystem and that it has been properly declared in your 'Project.xml' file. Without this, Flixel-Modding will fail to operate as expected.", "Critical Error!");
+            FlxG.log.error('Critical Error! ${FlxModding.modsDirectory} not found. Please ensure that the directory exists on your filesystem and that it has been properly declared in your \'Project.xml\' file. Without this, Flixel-Modding will fail to operate as expected.');
+            FlxG.stage.window.alert('${FlxModding.modsDirectory} not found. Please ensure that the directory exists on your filesystem and that it has been properly declared in your \'Project.xml\' file. Without this, Flixel-Modding will fail to operate as expected.', "Critical Error!");
             FlxG.stage.window.close();
             return null;
         }
 
         #else
-        FlxG.log.error("Critical Error! Failed to Initialize FlxModding. Flixel-Modding cannot run properly while targeting JavaScript or HTML5, native targets are required for modding support.");
-        //FlxG.log.error("Critical Error! Cannot access required filesystem functionality when targeting JavaScript or HTML5. Native targets are required for modding support.");
+        FlxG.log.error('Critical Error! Failed to Initialize FlxModding. Flixel-Modding cannot run properly while targeting JavaScript or HTML5, native targets are required for modding support.');
+        //FlxG.log.error('Critical Error! Cannot access required filesystem functionality when targeting JavaScript or HTML5. Native targets are required for modding support.');
         return null;
         #end
     }
@@ -219,9 +219,7 @@ class FlxModding
         if (updateMetadata == true && mods.length != 0)
         {
             if (enabled)
-            {
                 FlxModding.update();
-            }
         }
 
         mods.clear();
@@ -287,7 +285,7 @@ class FlxModding
                 }
 
                 add(modpack);
-                print('Added mod: "' + modpack.name + '"');
+                print('Added mod: "${modpack.name}"');
             }
         }
 
@@ -316,15 +314,11 @@ class FlxModding
         preModsUpdate.dispatch();
 
         if (modpack != null)
-        {
             modpack.updateMetadata();
-        }
         else
         {
             for (otherModpack in mods)
-            {
                 otherModpack.updateMetadata();
-            }
         }
 
         postModsUpdate.dispatch();
@@ -382,9 +376,7 @@ class FlxModding
             print("Modpack Created!");
         }
         else
-        {
-            FlxG.log.warn("The mod: " + fileName + " has already been created. You cannot create a mod with the same name.");
-        }
+            FlxG.log.warn('The mod: $fileName has already been created. You cannot create a mod with the same name.');
         #end
     }
 
@@ -433,30 +425,28 @@ class FlxModding
         for (modpack in mods.members)
         {
             if (modpack.name.toLowerCase() == name.toLowerCase())
-            {
                 return modpack;
-            }
         }
 
-        FlxG.log.warn("Failed to locate Modpack: " + name + ", are you sure you spelt the name correctly?");
+        FlxG.log.warn('Failed to locate Modpack: $name, are you sure you spelt the name correctly?');
         return null;
     }
     
     public function new()
     {
         #if (!js || !html5)
-        #if (flixel >= "5.9.0")
-        FlxG.assets.getAssetUnsafe = this.getAsset;
-        FlxG.assets.loadAsset = this.loadAsset;
-        FlxG.assets.exists = this.exists;
+            #if (flixel >= "5.9.0")
+            FlxG.assets.getAssetUnsafe = this.getAsset;
+            FlxG.assets.loadAsset = this.loadAsset;
+            FlxG.assets.exists = this.exists;
 
-        FlxG.assets.list = this.list;
-        FlxG.assets.isLocal = this.isLocal;
-        #else
-        FlxG.log.error("Critical Error! Cannot run the FlxModding instance, HaxeFlixel is OUT OF DATE. Please update to HaxeFlixel version 5.9.0 or higher");
-        FlxG.stage.window.alert("Cannot run the FlxModding instance, HaxeFlixel is OUT OF DATE. Please update to HaxeFlixel version 5.9.0 or higher", "Critical Error!");
-        FlxG.stage.window.close();
-        #end
+            FlxG.assets.list = this.list;
+            FlxG.assets.isLocal = this.isLocal;
+            #else
+            FlxG.log.error("Critical Error! Cannot run the FlxModding instance, HaxeFlixel is OUT OF DATE. Please update to HaxeFlixel version 5.9.0 or higher");
+            FlxG.stage.window.alert("Cannot run the FlxModding instance, HaxeFlixel is OUT OF DATE. Please update to HaxeFlixel version 5.9.0 or higher", "Critical Error!");
+            FlxG.stage.window.close();
+            #end
         #end
     }
 
@@ -475,8 +465,10 @@ class FlxModding
 			
 			case IMAGE if ((useCache && FlxModding.cache.enabled) && FlxModding.cache.hasBitmapData(redirect(id))):
 				FlxModding.cache.getBitmapData(redirect(id));
+
 			case SOUND if ((useCache && FlxModding.cache.enabled) && FlxModding.cache.hasSound(redirect(id))):
 				FlxModding.cache.getSound(redirect(id));
+
 			case FONT if ((useCache && FlxModding.cache.enabled) && FlxModding.cache.hasFont(redirect(id))):
 				FlxModding.cache.getFont(redirect(id));
 			
@@ -485,11 +477,13 @@ class FlxModding
 				if (useCache && FlxModding.cache.enabled)
 					FlxModding.cache.setBitmapData(redirect(id), bitmap);
 				bitmap;
+
 			case SOUND:
 				var sound = Sound.fromFile(redirect(id));
 				if (useCache && FlxModding.cache.enabled) 
 					FlxModding.cache.setSound(redirect(id), sound);
 				sound;
+
 			case FONT:
 				var font = Font.fromFile(redirect(id));
 				if (useCache && FlxModding.cache.enabled)
@@ -582,9 +576,13 @@ class FlxModding
 		return switch(type)
 		{
 			case TEXT: OpenFLAssets.getText(id);
+
 			case BINARY: OpenFLAssets.getBytes(id);
+
 			case IMAGE: OpenFLAssets.getBitmapData(id, useCache);
+
 			case SOUND: OpenFLAssets.getSound(id, useCache);
+
 			case FONT: OpenFLAssets.getFont(id, useCache);
 		}
 	}
@@ -597,17 +595,11 @@ class FlxModding
         FlxModding.sort();
 
         if (StringTools.startsWith(id, "flixel/") || StringTools.startsWith(id, FlxModding.modsDirectory + "/"))
-        {
             return id;
-        }
         else if (StringTools.startsWith(id, FlxModding.assetDirectory + "/"))
-        {
             return pathway(id.substr(Std.string(FlxModding.assetDirectory + "/").length));
-        }
         else
-        {
             return pathway(id);
-        }
     }
 
     /**
@@ -621,9 +613,7 @@ class FlxModding
         for (modpack in mods)
         {
             if ((modpack.active && modpack.alive && modpack.exists) && enabled && FileSystem.exists(modpack.directory() + "/" + id))
-            {
                 directory = modpack.directory();
-            }
         }
 
         return directory + "/" + id;
