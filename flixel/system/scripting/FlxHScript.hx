@@ -277,8 +277,8 @@ class FlxHScript extends FlxBasic
             }
         ];
 
-        for (i in vars.members)
-            setGlobalVariable(i.name, i.classname);
+        for (i in 0...vars.length)
+            setGlobalVariable(vars[i].name, vars[i].classname);
     }
 
     public static function init():Void
