@@ -132,10 +132,10 @@ class FlxModding
 	static var assetDirectory:String = "assets";
 	static var modsDirectory:String = "mods";
 
-	static var metaDirectory:String = "metadata.json";
+	static var metaDirectory:String = "mod.json";
 	static var iconDirectory:String = "icon.png";
 
-	static var metaPolymodDirectory:String = "metadata.json";
+	static var metaPolymodDirectory:String = "mod.json";
 	static var iconPolymodDirectory:String = "icon.png";
 
     /**
